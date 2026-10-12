@@ -1,0 +1,12 @@
+$ bash /tmp/dag.sh day09_reset
+triggered day09_reset run_id=dag_id
+$ bash /tmp/dag.sh day09_reset --no-trigger
+dag=day09_reset run_id=manual__2026-10-12T15:18:05+00:00 state=success
+{'success': 1}
+EXIT 0
+
+$ bash /tmp/dag.sh day09_video_pipeline
+dag=day09_video_pipeline run_id=manual__2026-10-12T15:29:02+00:00 state=success
+{'success': 37}
+EXIT 0
+

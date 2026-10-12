@@ -1,0 +1,24 @@
+$ scripts/lab.sh step 5
+
+==============================================================================
+Bước 5 · WAREHOUSE: mart vào Postgres cho dashboard
+==============================================================================
+  dbt run (marts): PASS=7 WARN=0 ERROR=0 SKIP=0
+  {'mart_frame_funnel': 2, 'mart_frame_gallery': 1019, 'mart_speed_coverage': 7, 'mart_split_balance': 3, 'mart_telemetry_quality': 2, 'mart_trip_summary': 26}
+
+CẦN THẤY: 6 mart trong Postgres (schema marts). Tiếp theo: chạy cả DAG trong Airflow (http://localhost:8080) và mở Metabase.
+
+--- Kiểm tra tự động của module 5 (verify --module 5) ---
+
+Module 5 · warehouse
+  PASS  warehouse has the six marts            {'mart_trip_summary': 26, 'mart_telemetry_quality': 2, 'mart_split_balance': 3, 'mart_speed_coverage': 7, 'mart_frame_gallery': 1019, 'mart_frame_funnel': 2}
+  PASS  warehouse gallery rows == gold frames  
+
+2/2 checks passed
+{"ok": true}
+EXIT 0
+
+$ scripts/lab.sh cli list-trips
+["trip-00003", "trip-00722", "trip-01037", "trip-02086", "trip-02097", "trip-02134", "trip-02689", "trip-02736", "trip-03365", "trip-03904", "trip-04237", "trip-04324", "trip-04622", "trip-04868", "trip-04871", "trip-05297", "trip-05905", "trip-06570", "trip-06667", "trip-07304", "trip-07774", "trip-07900", "trip-08448", "trip-08888", "trip-09209", "trip-09608"]
+EXIT 0
+

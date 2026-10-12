@@ -1,0 +1,6 @@
+$ pkill -f dag.sh
+$ pgrep -af docker-compose
+78172 bash /tmp/r.sh dbg pgrep -af docker-compose
+78174 bash /tmp/r.sh dbg pgrep -af docker-compose
+EXIT 0
+
