@@ -1,0 +1,17 @@
+### select * from silver.silver_telemetry_rejects limit 5
+drive_id  ts                                reject_reason       speed_mps  _batch_id     _row_no
+--------  --------------------------------  ------------------  ---------  ------------  -------
+drive_a   2025-10-07 08:00:32.884000+00:00  duplicate           4.935      17f098d6bbb1  330    
+drive_a   2025-10-07 08:00:39.916000+00:00  speed_out_of_range  250.0      17f098d6bbb1  400    
+drive_a   2025-10-07 08:01:59.611000+00:00  speed_missing                  17f098d6bbb1  1204   
+drive_a   2025-10-07 08:02:00.307000+00:00  speed_missing                  17f098d6bbb1  1211   
+drive_a   2025-10-07 08:03:08.706000+00:00  duplicate           8.546      17f098d6bbb1  1902   
+### select drive_id, reject_reason, count(*) so_dong from silver.silver_telemetry_rejects group by 1, 2 order by 1, 2
+drive_id  reject_reason       so_dong
+--------  ------------------  -------
+drive_a   duplicate           20     
+drive_a   speed_missing       30     
+drive_a   speed_out_of_range  3      
+drive_b   duplicate           20     
+drive_b   speed_missing       30     
+drive_b   speed_out_of_range  3      
