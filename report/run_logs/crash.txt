@@ -1,0 +1,103 @@
+$ bash /tmp/crash.sh on
+LAB_STUDENT_ID=2A202602437
+LAB_FAIL_ONCE=trip-03904
+ Container day09-airflow-1 Started 
+LAB_FAIL_ONCE trong container: [trip-03904]
+EXIT 0
+
+$ bash /tmp/dag.sh day09_reset
+dag=day09_reset run_id=manual__2026-10-12T15:55:13+00:00 state=success
+{'success': 1}
+EXIT 0
+
+$ bash /tmp/dag.sh day09_video_pipeline
+dag=day09_video_pipeline run_id=manual__2026-10-12T15:55:41+00:00 state=failed
+{'success': 29, 'upstream_failed': 7, 'failed': 1}
+   dbt_run_silver  upstream_failed
+   dbt_test_silver  upstream_failed
+   dbt_run_gold  upstream_failed
+   dbt_test_gold  upstream_failed
+   publish_lake  upstream_failed
+   export_dataset  upstream_failed
+   publish_warehouse  upstream_failed
+   silver_frames 9 failed
+EXIT 0
+
+$ bash /tmp/clear.sh
+cleared: {'detail': "['silver_frames', 9] is not of type 'string' - 'task_ids.0'", 'status': 400, 'title': 'Bad Request', 'type': 'https://airflow.apache.org/docs/apache-airflow/2.10.5/stable-rest-api-ref.html#section/Errors/BadRequest'}
+dag=day09_video_pipeline run_id=manual__2026-10-12T15:55:41+00:00 state=failed
+{'success': 29, 'upstream_failed': 7, 'failed': 1}
+   dbt_run_silver  upstream_failed
+   dbt_test_silver  upstream_failed
+   dbt_run_gold  upstream_failed
+   dbt_test_gold  upstream_failed
+   publish_lake  upstream_failed
+   export_dataset  upstream_failed
+   publish_warehouse  upstream_failed
+   silver_frames 9 failed
+try_number > 1: []
+EXIT 0
+
+$ bash /tmp/clear.sh
+/tmp/clear.sh: line 1: syntax error near unexpected token `('
+/tmp/clear.sh: line 1: `﻿# clear đúng task đỏ (silver_frames, map_index 9) + downstream của nó, rồi đợi DAG xong'
+EXIT 2
+
+$ bash /tmp/clear.sh
+cleared: {'detail': None, 'status': 401, 'title': 'Unauthorized', 'type': 'https://airflow.apache.org/docs/apache-airflow/2.10.5/stable-rest-api-ref.html#section/Errors/Unauthenticated'}
+dag=day09_video_pipeline run_id=manual__2026-10-12T15:55:41+00:00 state=failed
+{'success': 29, 'upstream_failed': 7, 'failed': 1}
+   dbt_run_silver  upstream_failed
+   dbt_test_silver  upstream_failed
+   dbt_run_gold  upstream_failed
+   dbt_test_gold  upstream_failed
+   publish_lake  upstream_failed
+   export_dataset  upstream_failed
+   publish_warehouse  upstream_failed
+   silver_frames 9 failed
+try_number > 1: []
+EXIT 0
+
+$ bash /tmp/dag.sh day09_video_pipeline --no-trigger
+dag=day09_video_pipeline run_id=manual__2026-10-12T15:55:41+00:00 state=success
+{'success': 37}
+EXIT 0
+
+$ bash /tmp/after.sh
+số task chạy lại (try_number > 1): 0
+trip_id     khung  khung_khac_nhau
+----------  -----  ---------------
+trip-03904  22     22             
+tong_khung  khac_nhau
+----------  ---------
+1246        1246     
+silver.frames commits: 8
+   {'version': 25, 'operation': 'WRITE', 'rows_added': 22, 'predicate': "trip_id = 'trip-03904'"}
+  PASS  warehouse gallery rows == gold frames                                    
+
+27/27 checks passed
+{"ok": true}
+EXIT 0
+
+$ scripts/lab.sh verify --module 4
+
+Module 4 · gold dataset
+  PASS  gold has frames in every split                                        1019 frames
+  PASS  no trip is in two splits (no leakage)                                 26 trips
+  PASS  every drive appears in train, val and test                            
+  PASS  gold contains no black / blurry / near-duplicate / out-of-sync frame  
+  PASS  one dataset_version, manifest.json agrees with the table              version 247152d8c2e5
+  PASS  manifest lists upstream table versions (lineage)                      
+  PASS  every manifest image exists under the dataset version folder          
+
+7/7 checks passed
+{"ok": true}
+EXIT 0
+
+$ bash /tmp/crash.sh off
+LAB_STUDENT_ID=2A202602437
+.failed-trip-03904
+ Container day09-airflow-1 Started 
+LAB_FAIL_ONCE trong container: []
+EXIT 0
+

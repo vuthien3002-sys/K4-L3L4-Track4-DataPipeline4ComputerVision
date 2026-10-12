@@ -4,3 +4,26 @@ $ pgrep -af docker-compose
 78174 bash /tmp/r.sh dbg pgrep -af docker-compose
 EXIT 0
 
+$ docker compose exec -T postgres psql -U lab -d warehouse -c d marts.mart_trip_summary -c select java nvm from marts.mart_trip_summary limit 3 -c select java nvm from marts.mart_frame_funnel
+psql: warning: extra command-line argument "marts.mart_trip_summary" ignored
+psql: warning: extra command-line argument "java" ignored
+psql: warning: extra command-line argument "nvm" ignored
+psql: warning: extra command-line argument "from" ignored
+psql: warning: extra command-line argument "marts.mart_trip_summary" ignored
+psql: warning: extra command-line argument "limit" ignored
+psql: warning: extra command-line argument "3" ignored
+psql: warning: extra command-line argument "java" ignored
+psql: warning: extra command-line argument "nvm" ignored
+psql: warning: extra command-line argument "from" ignored
+psql: warning: extra command-line argument "marts.mart_frame_funnel" ignored
+ERROR:  syntax error at or near "d"
+LINE 1: d
+        ^
+--
+(1 row)
+
+--
+(1 row)
+
+EXIT 0
+
