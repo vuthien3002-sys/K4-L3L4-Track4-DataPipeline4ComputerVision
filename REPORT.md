@@ -124,7 +124,7 @@ MSSV được trộn vào thứ tự xếp trip (`md5(trip_id || LAB_STUDENT_ID)
 ### Câu 8
 Đọc phần `lineage` trong `manifest.json` của dataset bạn. Trả lời "dataset này được tạo từ dữ liệu nào?" bằng chính nội dung đó. Nếu một người hỏi 3 tháng sau, thông tin nào giúp tái tạo lại đúng dataset này?
 
-Theo `gold/datasets/247152d8c2e5/manifest.json` (lần chạy cuối), dataset được tạo từ:
+Trong MinIO, thư mục `lake/gold/datasets/247152d8c2e5/` gồm `manifest.json`, `manifest.parquet` và ba thư mục `train/` (689 ảnh), `val/` (140), `test/` (190). Số ảnh khớp đúng `by_split` của manifest (ảnh `report/screenshots/minio_gold_dataset.png`). Theo `manifest.json` (lần chạy cuối), dataset được tạo từ:
 - **Bronze**: `raw_telemetry_a` v0, `raw_telemetry_b` v0, `trips_raw` v0, `video_files` v1.
 - **Silver**: `frames` v25, `telemetry` v0, `frames_flagged` v0, `frame_telemetry` v0.
 - **Video đầu vào**: drive_a sha256 `636ba1a98dfc…e7e9aa`, drive_b sha256 `bfa62703f645…ee9fdc`.

@@ -349,3 +349,26 @@ $ python3 scripts/check_submission.py
 Nhắc: repo phải ở chế độ Public khi nộp, và bạn nộp ĐƯỜNG DẪN repo.
 EXIT 0
 
+$ python3 scripts/check_submission.py
+  PASS  không sửa tests/, pipeline/verify.py, docker-compose.yml                              
+  PASS  thông tin cá nhân của REPORT.md đã điền (họ tên, MSSV, GitHub, trip)                  
+  PASS  đã trả lời đủ 10 câu (mỗi câu ≥ 80 ký tự, không còn '(trả lời ở đây)')                
+  PASS  đã điền câu hỏi riêng trên Metabase và phần 'Nhìn lại'                                
+  PASS  REPORT.md ghi dataset_version của bạn                                                 247152d8c2e5
+  PASS  đủ 5 file bằng chứng trong report/evidence/                                           
+  PASS  student_id trong bằng chứng khớp MSSV trong REPORT.md                                 
+  PASS  run_summary.json: verify đạt toàn bộ                                                  
+  PASS  dataset_version trong REPORT.md khớp run_summary.json                                 REPORT=247152d8c2e5 run_summary=247152d8c2e5
+  PASS  ảnh chụp: airflow_graph, minio_lake, metabase_dashboard và ít nhất 1 ảnh bài tập sập  hiện có 8 ảnh
+  PASS  report/verify.txt cho thấy 27/27 kiểm tra đạt                                         
+  PASS  ít nhất 5 commit (khoảng một commit cho mỗi bước)                                     hiện có 13
+  PASS  thông điệp commit nêu số bước (ví dụ 'Bước 3: thí nghiệm idempotent')                 thấy bước: ['1', '2', '3', '4', '5']
+  PASS  mọi thay đổi đã commit                                                                
+  PASS  không commit dữ liệu data/, file .zip, work/, .tar, .duckdb, hoặc file > 50 MB        
+  PASS  không có khoá bí mật hay token thật trong repo                                        
+  PASS  đã có remote origin để push                                                           https://github.com/vuthien3002-sys/K4-L3L4-Track4-DataPipeline4ComputerVision
+
+17/17 mục ổn. Sẵn sàng push.
+Nhắc: repo phải ở chế độ Public khi nộp, và bạn nộp ĐƯỜNG DẪN repo.
+EXIT 0
+
