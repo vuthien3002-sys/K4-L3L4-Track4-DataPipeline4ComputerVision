@@ -48,7 +48,7 @@ Bằng chứng: thời điểm bắt đầu của B là `2025-10-08 14:30:00.009
 | drive_a | 20 | 30 | 3 | 53 |
 | drive_b | 20 | 30 | 3 | 53 |
 
-Dòng lỗi vào `silver_telemetry_rejects` kèm `reject_reason`, không bị xoá. Lý do là để còn **đối soát được** (verify kiểm tra đúng phương trình trên) và **truy được nguồn lỗi** (ví dụ thiết bị nào hay gửi trùng). Nếu một luật lọc sai, ta xem lại hoặc khôi phục được các dòng đó. Xoá im lặng sẽ làm mất dữ liệu mà không ai biết.
+Dòng lỗi vào `silver_telemetry_rejects` kèm `reject_reason`, không bị xoá. Mỗi dòng bị cách ly giữ nguyên `_batch_id` và `_row_no`, nên truy ngược được về đúng dòng trong file gốc. Ví dụ, `select * from silver.silver_telemetry_rejects limit 5` cho thấy dòng `_row_no 400` của drive_a có `speed_mps = 250.0` (900 km/h, lý do `speed_out_of_range`), dòng 330 bị `duplicate`, còn dòng 1204 và 1211 bị `speed_missing`. Giữ dòng lỗi là để còn **đối soát được** (verify kiểm tra đúng phương trình trên) và **truy được nguồn lỗi** (ví dụ thiết bị nào hay gửi trùng). Nếu một luật lọc sai, ta xem lại hoặc khôi phục được các dòng đó. Xoá im lặng sẽ làm mất dữ liệu mà không ai biết.
 
 ### Câu 3
 Vì sao test `max_gap_ms` là `warn` còn `in_range` là `error`? Kết quả thí nghiệm `break-gate` của bạn (`break_gate.json`): test nào bắt được, bao nhiêu dòng, và điều đó cho biết gì về vai trò của "cổng chất lượng"?
