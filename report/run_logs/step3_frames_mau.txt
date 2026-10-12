@@ -1,0 +1,13 @@
+DEN (loai) drive_a-01001 0.0 0 18 43
+MO (loai) drive_a-01998 117.8 2 16 33
+TOI (giu lai) drive_b-00030 23.1 244 98 52
+truoc khung TRUNG drive_a-00095 69.5 1012 15 3
+TRUNG (loai) drive_a-00100 70.0 814 112 3
+MAT DONG BO (loai) drive_a-00000 74.3 613 None None
+TOT (giu) drive_a-00005 74.2 555 92 5
+saved
+### select drive_id, count(*) khung, round(avg(sync_gap_ms)) tb_ms, quantile_cont(sync_gap_ms, 0.5) trung_vi_ms, max(sync_gap_ms) max_ms, sum(sync_lost::int) mat_dong_bo from silver.silver_frame_telemetry group by 1 order by 1
+drive_id  khung  tb_ms  trung_vi_ms  max_ms  mat_dong_bo
+--------  -----  -----  -----------  ------  -----------
+drive_a   602    66.0   18.0         2884    7          
+drive_b   644    73.0   81.0         3112    7          

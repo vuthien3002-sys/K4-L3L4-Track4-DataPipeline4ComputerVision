@@ -84,6 +84,14 @@ Khung hình **đen** và khung hình **tối** khác nhau thế nào, pipeline x
 
 Khung **đen** có độ sáng trung bình < 12 (`dark_luma`). Đó là camera hỏng hoặc che, gần như không có thông tin, nên bị **loại** (A có 6 khung, B có 4, verify bắt đủ 6/6 và 4/4). Khung **tối** có độ sáng < 40 (`dark_soft`): đường hầm, bóng râm, chiều tối. Đây là **điều kiện lái thật** mà mô hình phải học, nên chỉ **gắn cờ và giữ lại** (B giữ 61 khung, A giữ 4). Tôi đồng ý với cách này: loại khung tối sẽ khiến mô hình kém đúng ở những tình huống khó nhất. Cờ `dark` vẫn hữu ích để kiểm tra mỗi split có đủ khung tối hay không.
 
+Tôi mở ảnh trong `silver/frames/` để đối chiếu (ảnh ghép `report/screenshots/silver_frames_mau.png`):
+- Khung đen `drive_a-01001` có độ sáng 0.0, độ nét 0: không có gì để học.
+- Khung mờ `drive_a-01998` có độ sáng 117.8 nhưng độ nét chỉ 2: cảnh bị nhoè hoàn toàn.
+- Khung tối `drive_b-00030` là cửa hầm, độ sáng 23.1 nhưng độ nét 244: vẫn thấy rõ đường và thành hầm, giữ lại là đúng.
+- Khung trùng `drive_a-00100` gần như giống hệt khung liền trước `drive_a-00095`, vì xe chỉ đi 3 km/h.
+
+Độ trễ đồng bộ frame–telemetry: trung bình 66 ms (A) và 73 ms (B), trung vị 18 / 81 ms. Mức tối đa 2884 / 3112 ms rơi vào các đoạn cảm biến mất tín hiệu, và mỗi drive có 7 khung `sync_lost`.
+
 Tôi chọn ngưỡng **2**:
 - Ngưỡng 0 chỉ bắt khung giống hệt, nên bỏ sót nhiều khung gần trùng do nhiễu nén. Drive B chỉ bắt được 8 khung.
 - Ngưỡng 6 coi tới 363/602 khung của A (60%) là trùng, tức là loại cả những khung khác nhau thật.
@@ -193,3 +201,4 @@ Câu 1 cho thấy một ngoại lệ đáng chú ý: `trip-04622` (drive_a) ch�
   - Luật tốc độ 0–70 m/s (tới 252 km/h) quá rộng cho xe trong phố. Giá trị sai nhưng "có vẻ hợp lý", như 60 m/s giữa hai mẫu 20 m/s, vẫn lọt qua.
   - Không có test về **gia tốc hay độ nhảy** giữa hai mẫu liên tiếp, kể cả nhảy GPS hay đổi hướng đột ngột.
   - Cũng không có test chéo giữa tốc độ và chuyển động trong ảnh (xe báo 50 km/h nhưng khung hình đứng yên).
+  - Ngược lại, có trường hợp pipeline **loại nhầm khung tốt**: khung đầu tiên `drive_a-00000` rõ nét (độ sáng 74, độ nét 613) nhưng bị `sync_lost`. Nguyên nhân là telemetry bắt đầu lúc `08:00:00.014`, tức 14 ms *sau* khung này, nên ASOF join (tìm mẫu telemetry gần nhất phía trước) không có dòng nào để ghép.
